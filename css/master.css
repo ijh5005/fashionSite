@@ -1,0 +1,89 @@
+body {
+  background-color: var(--red);
+  font-family: 'Cuprum', sans-serif;
+}
+
+:root {
+  --red: #EB5058;
+  --grey: #B1B1B1;
+}
+
+/* <!-- SPLASH --> */
+#splash {
+  color: #fff;
+  height: 100vh;
+  width: 100vw;
+  background-color: var(--red);
+  opacity: 0;
+  transition: opacity 0.5s;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+#splash p {
+  margin: 0;
+}
+
+#splashLogo {
+  font-size: 10em;
+  font-weight: bold;
+}
+
+#splashDesignerName {
+  font-size: 2em;
+  width: 100%;
+  text-align: center;
+  position: relative;
+}
+
+#splashDesignerName:visited::after {
+  width: 100%;
+}
+
+/* <!-- CONTAINER --> */
+#container {
+  height: 100vh;
+  width: 100vw;
+}
+
+/* <!-- NAVIGATION --> */
+#navigation {
+  height: 6vh;
+  border-bottom: 0.01em solid var(--grey);
+  justify-content: space-between;
+}
+
+.active {
+  color: var(--red);
+}
+
+#bavLeftSide {
+  justify-content: flex-start;
+  padding: 0 2em;
+}
+
+#logo {
+  font-size: 1.6em;
+  opacity: 0.7;
+  border-right: 0.01em solid #000;
+  padding-right: 1em;
+  margin-right: 1em;
+}
+
+.navOptions {
+  margin: 0 0.5em 0 0.5em;
+}
+
+.navOptions:hover,
+#navRightSide i:hover {
+  color: var(--red);
+}
+
+#navRightSide {
+  font-size: 1.4em;
+  opacity: 0.6;
+  justify-content: space-between;
+  padding: 0 2em;
+  width: 6em;
+}
