@@ -5,9 +5,10 @@
     <title></title>
     <link rel="stylesheet" href="./css/library.css">
     <link rel="stylesheet" href="./css/master.css">
+    <link rel="stylesheet" href="./css/animation.css">
     <link href="https://fonts.googleapis.com/css?family=Cuprum:400,400i,700,700i" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css" integrity="sha384-v2Tw72dyUXeU3y4aM2Y0tBJQkGfplr39mxZqlTBDUZAb9BGoC40+rdFCG0m10lXk" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/fontawesome.css" integrity="sha384-q3jl8XQu1OpdLgGFvNRnPdj5VIlCvgsDQTQB6owSOHWlAurxul7f+JpUOVdAiJ5P" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300i,700" rel="stylesheet">
+    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js" integrity="sha384-SlE991lGASHoBfWbelyBPLsUlwY1GwNDJo3jSJO04KZ33K2bwfV9YBauFfnzvynJ" crossorigin="anonymous"></script>
   </head>
   <body ng-app='app' ng-controller='ctrl' ng-cloak>
 
@@ -18,25 +19,109 @@
     </div>
 
     <!-- CONTAINER -->
-    <div id="container" class="none">
+    <div id="container" class="none flexCol">
+
+      <!-- PRODUCT GALLERY -->
+      <div id="productGalleryContainer" class="flexRow" ng-if='showProductGallery'>
+        <div id="shadedArea" class="" ng-click='toggleProductGallery()'></div>
+        <div id="productGallery" class="fullWidth flexRow">
+          <div id="" class="flexRow fullHeight">
+            <div id="bigImgInGallery" class=""></div>
+            <div id="smallImgsInGallery" class="fullHeight flexRow">
+              <div id="img0" class="smallImgs h50 w50" ng-click='setLargerGalleryImg(0)'></div>
+              <div id="img1" class="smallImgs h50 w50" ng-click='setLargerGalleryImg(1)'></div>
+              <div id="img2" class="smallImgs h50 w50" ng-click='setLargerGalleryImg(2)'></div>
+              <div id="img3" class="smallImgs h50 w50" ng-click='setLargerGalleryImg(3)'></div>
+            </div>
+          </div>
+          <div id="descriptionSectionInGallery" class="fullHeight">
+            <div id="descriptionTop" class="fullWidth h20 flexCol">
+              <p id="descriptionName"></p>
+              <p id="descriptionPrice"></p>
+            </div>
+            <div id="descriptionMiddle" class="fullWidth h40 flexCol">
+              <p id="descriptionDescription"></p>
+            </div>
+            <div id="descriptionBottom" class="fullWidth flexCol">
+              <div id="descriptionBuyBtn" class="flexCol fullWidth descriptionBtn">
+                <p>ADD TO CART</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <!-- NAVIGATION -->
       <div  id="navigation" class="flexRow">
         <div id="bavLeftSide" class="flexRow">
           <p id="logo">SEW & SO</p>
-          <p class="navOptions active">HOME</p>
-          <p class="navOptions">ABOUT</p>
-          <p class="navOptions">SHOP</p>
-          <p class="navOptions">LESSONS</p>
-          <p class="navOptions">CONTACT</p>
+          <p class="navOptions pointer">HOME</p>
+          <p class="navOptions pointer">ABOUT</p>
+          <p class="navOptions pointer active">SHOP</p>
+          <p class="navOptions pointer">LESSONS</p>
+          <p class="navOptions pointer">CONTACT</p>
+          <p class="navOptions pointer">CART</p>
         </div>
         <div id="navRightSide" class="flexRow">
-          <i class="fas fa-search"></i>
-          <i class="fas fa-user-circle"></i>
-          <i class="fas fa-shopping-bag"></i>
+          <i class="fas fa-search pointer"></i>
+          <i class="fas fa-user-circle pointer"></i>
+          <i id="cartIcon" class="fas fa-shopping-bag pointer"></i>
+          <p id="cartQuantity" class="flexRow">{{cartQuantity}}</p>
         </div>
       </div>
 
+      <!-- FILTER -->
+      <div id="filter" class="flexRow">
+        <div id="filterLeftSide" class="flexRow">
+          <p class="filterOption pointer">SIZE &nbsp; <span><i class="fas fa-angle-down"></i></span></p> <p class="filterDivider">/</p>
+          <p class="filterOption pointer">COLOR &nbsp; <span><i class="fas fa-angle-down"></i></span></p> <p class="filterDivider">/</p>
+          <p class="filterOption pointer">FILTER &nbsp; <span><i class="fas fa-angle-down"></i></span></p> <p class="filterDivider">/</p>
+          <p class="filterOption pointer">PRICE &nbsp; <span><i class="fas fa-angle-down"></i></span></p> <p class="filterDivider">/</p>
+          <p id="resetFilterBtn" class="pointer">x reset filters</p>
+        </div>
+        <div id="filterRightSide" class="flexRow">
+          <p>view:</p>
+          <div id="largeGalleryView" class="flexRow pointer">
+            <div class="largeGalleryViewBox"></div>
+            <div class="largeGalleryViewBox"></div>
+            <div class="largeGalleryViewBox"></div>
+            <div class="largeGalleryViewBox"></div>
+          </div>
+          <div id="smallGalleryView" class="flexRow pointer">
+            <div class="smallGalleryViewBox"></div>
+            <div class="smallGalleryViewBox"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GALLERY -->
+      <div id="gallery" class="">
+        <div id="galleryContainer" class="fullHeight w80 flexRow">
+          <div data={{$index}} class="productBox" ng-repeat='product in products track by $index'>
+            <div data={{$index}} class="productPriceBox flexRow">
+              <p>{{product.price}}</p>
+            </div>
+            <div data={{$index}} class="innerImg fullHeight fullWidth" style="background-image: url('{{product.img}}')"></div>
+            <div class="productBtns fullWidth fullHeight">
+              <div class="addToCartBtn fullWidth h50 flexRow" ng-click='addToCartFromGallery($index)'>
+                <p>ADD TO CART</p>
+              </div>
+              <div class="viewGalleryBtn fullWidth h50 flexRow" ng-click='toggleProductGallery($index)'>
+                <p>VIEW GALLERY</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FOOTER -->
+      <div id="footer" class="flexRow">
+        <i class="fab fa-facebook pointer"></i>
+        <i class="fab fa-snapchat-square pointer"></i>
+        <i class="fab fa-twitter-square pointer"></i>
+        <i class="fab fa-instagram pointer"></i>
+        <i class="fab fa-youtube pointer"></i>
+      </div>
 
     </div>
 
