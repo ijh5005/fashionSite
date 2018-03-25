@@ -22,6 +22,11 @@
   opacity: 0.6;
 }
 
+.activeView {
+  background-color: var(--red);
+  opacity: 0.6;
+}
+
 .productBox:hover > .productPriceBox {
   opacity: 1;
 }

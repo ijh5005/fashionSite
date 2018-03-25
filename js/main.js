@@ -13,6 +13,7 @@ app.controller('ctrl', ['$scope', '$rootScope', '$interval', '$timeout', 'animat
   //SCOPE VARIABLES
   $scope.products = data.products;
   $scope.showProductGallery = false;
+  $scope.navOptions = data.navOptions;
 
   //METHODS
   $scope.addToCartFromGallery = (index) => {
@@ -32,10 +33,18 @@ app.controller('ctrl', ['$scope', '$rootScope', '$interval', '$timeout', 'animat
   $scope.setLargerGalleryImg = (index) => {
     task.setLargerGalleryImg($rootScope.productGallerySmallImgs[index]);
   }
+  $scope.navigateTo = (navOption, index) => {
+    $('.navOptions').removeClass('active');
+    $('.navOptions[data="' + index + '"]').addClass('active');
+  }
+  $scope.changeViewFrom = (view) => {
+    task.switchViews(view)
+  }
 
   //INIT TASKS
   task.startSplash(data.products);
   task.assignIDsToProducts(data.products);
+  task.initalSetup();
 }]);
 
 app.service('animate', function($rootScope, $interval, $timeout){
@@ -161,6 +170,19 @@ app.service('task', function($rootScope, $interval, $timeout){
     })
     $rootScope.cartQuantity = quantity;
   }
+  this.initalSetup = () => {
+    //wait until the UI loads
+    $timeout(() => {
+      //set the inital navigation option
+      $('.navOptions[data="2"]').addClass('active');
+    })
+  }
+  this.switchViews = (view) => {
+    const addClassTo = (view === 'smallGalleryViewBox') ? '.smallGalleryViewBox' : '.largeGalleryViewBox';
+    const removeClassFrom = (view === 'smallGalleryViewBox') ? '.largeGalleryViewBox' : '.smallGalleryViewBox';
+    $(removeClassFrom).removeClass('activeView');
+    $(addClassTo).addClass('activeView');
+  }
 });
 
 app.service('data', function(){
@@ -277,6 +299,7 @@ app.service('data', function(){
       galleryImgs: ['./img/fashion.png', './img/fashion2.png', './img/fashion3.png', './img/fashion4.png'],
       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ante elit, facilisis ut commodo eget, iaculis at nibh.'
     },
-    
+
   ];
+  this.navOptions = ['HOME', 'ABOUT', 'SHOP', 'LESSONS', 'CONTACT', 'CART'];
 });

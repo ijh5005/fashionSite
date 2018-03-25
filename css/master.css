@@ -332,6 +332,10 @@ body {
   z-index: 20;
 }
 
+#footer a {
+  color: #222;
+}
+
 #footer > * {
   margin: 0.4em;
   opacity: 0.6;

@@ -55,12 +55,7 @@
       <div  id="navigation" class="flexRow">
         <div id="bavLeftSide" class="flexRow">
           <p id="logo">SEW & SO</p>
-          <p class="navOptions pointer">HOME</p>
-          <p class="navOptions pointer">ABOUT</p>
-          <p class="navOptions pointer active">SHOP</p>
-          <p class="navOptions pointer">LESSONS</p>
-          <p class="navOptions pointer">CONTACT</p>
-          <p class="navOptions pointer">CART</p>
+          <p data={{$index}} class="navOptions pointer" ng-repeat='navOption in navOptions track by $index' ng-click='navigateTo(navOption, $index)'>{{navOption}}</p>
         </div>
         <div id="navRightSide" class="flexRow">
           <i class="fas fa-search pointer"></i>
@@ -81,15 +76,15 @@
         </div>
         <div id="filterRightSide" class="flexRow">
           <p>view:</p>
-          <div id="largeGalleryView" class="flexRow pointer">
+          <div id="largeGalleryView" class="flexRow pointer" ng-click='changeViewFrom("largeGalleryViewBox")'>
             <div class="largeGalleryViewBox"></div>
             <div class="largeGalleryViewBox"></div>
             <div class="largeGalleryViewBox"></div>
             <div class="largeGalleryViewBox"></div>
           </div>
-          <div id="smallGalleryView" class="flexRow pointer">
-            <div class="smallGalleryViewBox"></div>
-            <div class="smallGalleryViewBox"></div>
+          <div id="smallGalleryView" class="flexRow pointer" ng-click='changeViewFrom("smallGalleryViewBox")'>
+            <div class="smallGalleryViewBox activeView"></div>
+            <div class="smallGalleryViewBox activeView"></div>
           </div>
         </div>
       </div>
@@ -116,11 +111,11 @@
 
       <!-- FOOTER -->
       <div id="footer" class="flexRow">
-        <i class="fab fa-facebook pointer"></i>
-        <i class="fab fa-snapchat-square pointer"></i>
-        <i class="fab fa-twitter-square pointer"></i>
-        <i class="fab fa-instagram pointer"></i>
-        <i class="fab fa-youtube pointer"></i>
+        <a href="#"><i class="fab fa-facebook pointer"></i></a>
+        <a href="#"><i class="fab fa-snapchat-square pointer"></i></a>
+        <a href="#"><i class="fab fa-twitter-square pointer"></i></a>
+        <a href="#"><i class="fab fa-instagram pointer"></i></a>
+        <a href="#"><i class="fab fa-youtube pointer"></i></a>
       </div>
 
     </div>
