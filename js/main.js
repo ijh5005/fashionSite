@@ -9,11 +9,13 @@ app.controller('ctrl', ['$scope', '$rootScope', '$interval', '$timeout', 'animat
   $rootScope.cartIDs = [];
   $rootScope.cart = [];
   $rootScope.cartQuantity = 0;
+  $rootScope.navigating = true;
 
   //SCOPE VARIABLES
   $scope.products = data.products;
   $scope.showProductGallery = false;
   $scope.navOptions = data.navOptions;
+  $scope.currentPage = 'SHOP';
 
   //METHODS
   $scope.addToCartFromGallery = (index) => {
@@ -23,11 +25,18 @@ app.controller('ctrl', ['$scope', '$rootScope', '$interval', '$timeout', 'animat
       task.calculateCartQuantity();
     }, 500)
   }
+  $scope.addToCartFromProductView = () => {
+    task.addToCart($rootScope.productViewProduct);
+    $timeout(() => {
+      task.calculateCartQuantity();
+    })
+  }
   $scope.toggleProductGallery = (index) => {
     $scope.showProductGallery = !$scope.showProductGallery;
     //wait for the ui to load to set the gallery info
     $timeout(() => {
       task.setProductGalleryData(data['products'][index]);
+      $rootScope.productViewProduct = data['products'][index];
     })
   }
   $scope.setLargerGalleryImg = (index) => {
@@ -36,6 +45,12 @@ app.controller('ctrl', ['$scope', '$rootScope', '$interval', '$timeout', 'animat
   $scope.navigateTo = (navOption, index) => {
     $('.navOptions').removeClass('active');
     $('.navOptions[data="' + index + '"]').addClass('active');
+    $scope.currentPage = navOption;
+    if(navOption === 'CART'){
+      $timeout(() => {
+        runStripe();
+      })
+    }
   }
   $scope.changeViewFrom = (view) => {
     task.switchViews(view)
@@ -98,6 +113,10 @@ app.service('task', function($rootScope, $interval, $timeout){
   this.startSplash = (products) => {
     //cacha the splash dom element
     const $splash = $('#splash');
+    //if there exist no splah screen skip
+    if(!$splash.length){
+      return null;
+    }
     //wait for UI to load
     $timeout(() => {
       //fade in the splash screen
